@@ -28,7 +28,7 @@ while running:
     #GAMELOOP
     player.update()
     collision.update(player,levelManager.collisionMap)
-    levelManager.update(player)
+    levelManager.update(player, dt)
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:

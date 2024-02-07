@@ -1,6 +1,7 @@
 import pygame
 from Level.levelManager import LevelManager
 
+
 class Player:
     def __init__(self, spawn, speed):
         self.spawn = spawn
@@ -24,8 +25,10 @@ class Player:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d]:
             self.direction.x = 1
+            self.move()
         if keys[pygame.K_a]:
             self.direction.x = -1
+            self.move()
         if keys[pygame.K_SPACE]:
             if self.hasJump:
                 self.jump()
@@ -37,7 +40,7 @@ class Player:
 
     def applyGravity(self):
         self.direction.y += self.gravity 
-        self.rect.y += self.direction.y
+        self.rect.y += self.direction.y * dt
 
     def jump(self):
         self.direction.y = self.jumpSpeed
@@ -56,13 +59,13 @@ class Player:
         
 
     def move(self):
-        self.rect.x += self.direction.x * self.speed * self.isMoveAllowed
+        self.rect.x += self.direction.x * self.speed * self.isMoveAllowed * dt
 
     def checkSprint(self):
         if self.isSprinting and self.speed <= self.maxSpeed:
-            self.speed += 1
+            self.speed += 0.2
         elif not self.isSprinting and self.speed >= self.minSpeed:
-            self.speed -= 1
+            self.speed -= 0.2
 
     def checkForDeath(self):
         if self.rect.y > 900:
